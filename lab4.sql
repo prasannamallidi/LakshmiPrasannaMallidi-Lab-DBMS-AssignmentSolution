@@ -138,7 +138,7 @@ INSERT INTO rating (RAT_ID, ORD_ID, RAT_RATSTARS) VALUES (16, 116, 0);
 
 --Display the total number of customers based on gender who have placed orders of worth at least Rs.3000.
 
-
+select CUS_ID,CUS_GENDER,count(CUS_ID) from customer where CUS_ID IN (select CUS_ID from order2 where ORD_AMOUNT >= 3000) group by CUS_GENDER
 
 
 
