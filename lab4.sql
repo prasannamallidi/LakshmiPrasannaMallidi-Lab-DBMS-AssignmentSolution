@@ -138,7 +138,7 @@ INSERT INTO rating (RAT_ID, ORD_ID, RAT_RATSTARS) VALUES (16, 116, 0);
 
 --Display the total number of customers based on gender who have placed orders of worth at least Rs.3000.
 
-Select GRADE, count(DISTINCT (C_ID))FROM CUSTOMER GROUP BY GRADE HAVINGGRADE > (SELECT AVG(GRADE) FROM CUSTOMER WHERE CITY='Delhi');_______________________________________________________________
+
 
 
 
