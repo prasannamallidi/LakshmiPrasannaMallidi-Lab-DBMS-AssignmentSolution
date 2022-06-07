@@ -157,12 +157,20 @@ SELECT CUS_NAME, CUS_GENDER FROM customer WHERE CUS_NAME LIKE '%A' OR CUS_NAME L
 --Create a stored procedure to display supplier id, name, rating and Type_of_Service. 
 --For Type_of_Service, If rating =5, print “Excellent Service”,If rating >4 print “Good Service”, If rating >2 print “Average Service” else print “Poor Service”
 
-
-
-
-
-
-    
-    
-
-
+CREATE PROCEDURE suppDetails()
+BEGIN
+select report.supp_id,report.supp_name,report.Average,
+CASE
+WHEN report.Average =5 THEN 'Excellent Service'
+WHEN report.Average >4 THEN 'Good Service'
+WHEN report.Average >2 THEN 'Average Service'
+ELSE 'Poor Service’
+END AS Type_of_Service from
+(select supp.supp_id, supplier.supp_name, supp.Average from
+(select temp2.supp_id, sum(temp2.rat_ratstars)/count(temp2.rat_ratstars) as Average from
+(select supplier_pricing.supp_id, temp1.ORD_ID, temp1.RAT_RATSTARS from supplier_pricing inner join
+(select order.pricing_id, rating.ORD_ID, rating.RAT_RATSTARS from order inner join rating on rating.ord_id = order.ord_id ) as temp1
+on temp1.pricing_id = supplier_pricing.pricing_id)
+as temp2 group by supplier_pricing.supp_id)
+as supp inner join supplier where supp.supp_id = supplier.supp_id) as report;
+END 
